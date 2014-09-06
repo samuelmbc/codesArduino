@@ -29,7 +29,8 @@ int potpinDir = 1;  // analog pin used to connect the potentiometer
 int potpinEsq = 2;  // analog pin used to connect the potentiometer
 int potpinSensor = 5; //sensor LDR
 int lineSensor = 5; //armazena a leitura do sensor
-int buttonPin = 7; //liga e deslica, será configurado com pull up interno.
+const int buttonPin = 7; //liga e deslica, será configurado com pull up interno.
+const int segueLinha = 8; //liga o modulo seguidor de linha  com pull up interno.
 int buttonState = HIGH; 
 int distSensor = 4;
 int sensorLumine = 0;
@@ -60,6 +61,8 @@ void setup()
   myservoEsq.attach(6);  // 
   pinMode(buttonPin,INPUT); //pino 7 usado para estado de configuração
   digitalWrite(buttonPin,HIGH);//coloca o estado da porta como pull Up interno
+  pinMode(segueLinha,INPUT);
+  digitalWrite(buttonPin, HIGH); 
   pinMode(soma,INPUT);
   digitalWrite(soma,HIGH);
   pinMode(13,OUTPUT);
@@ -74,7 +77,7 @@ void loop(){
   if (digitalRead(buttonPin)==LOW){
     state = 0;
   }else{
-    if (state == 0){
+    if (state == 0)&&(digitalRead(buttonPin)==LOW){ 
       state = 3;
       counter = 0;
     }
