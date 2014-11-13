@@ -24,6 +24,7 @@ void girarEsq();
 void andarReto();
 void pararPorSensorLDR();
 int lerDistancia();
+void andarTras();
  
 int potpinDir = 1;  // analog pin used to connect the potentiometer
 int potpinEsq = 2;  // analog pin used to connect the potentiometer
@@ -77,10 +78,15 @@ void loop(){
   if (digitalRead(buttonPin)==LOW){
     state = 0;
   }else{
-    if (state == 0)&&(digitalRead(buttonPin)==LOW){ 
+    if ((state == 0)&&(digitalRead(segueLinha)==LOW)){ 
       state = 3;
       counter = 0;
     }
+    if ((state == 0)&&(digitalRead(segueLinha)==HIGH)){ 
+      state = 1;
+      counter = 0;
+    }
+
   }
   //fim Define o estado inicial do sistema  
   //estado 0 é para regular os motores manualmente. 
@@ -149,7 +155,7 @@ void loop(){
           //parar(100); 
         }
      }
-     
+     andarTras(vel2,1000);
      //CÓDIGO ANTIGO
      //  objeto = analogRead(distSensor);
      //  digitalWrite(13,LOW);
@@ -199,5 +205,9 @@ void andarReto(int veloc, int tempo){
     myservoDir.write(meioDir-veloc);
     delay(tempo);
 }
-
+void andarTras(int veloc,int tempo){
+    myservoEsq.write(meioEsq-veloc);
+    myservoDir.write(meioDir+veloc);
+    delay(tempo);
+}
 

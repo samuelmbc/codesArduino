@@ -59,21 +59,23 @@ void imprime(int num){
         digitalWrite(vetorDisplay[k],matrizDados[j][k]);     
       }
 */      
-      j=num/10; //valor Decimal    
+      j=num/10; //valor Unidade    
       j=j%10;
+      for(k=0;k<=3;k++){
+         digitalWrite(vetorDisplay[k],matrizDados[j][k]);     
+      }
+      digitalWrite(clockUnidade,LOW);   
+      delay(5);
+      digitalWrite(clockUnidade,HIGH);
+      delay(5);
+            
+      j=num%10; // valor Dezena
       for(k=0;k<=3;k++){
          digitalWrite(vetorDisplay[k],matrizDados[j][k]);     
       }
       digitalWrite(clockDezena,LOW);   
       delay(5);
       digitalWrite(clockDezena,HIGH); 
-            
-      j=num%10; // valor unidade
-      for(k=0;k<=3;k++){
-         digitalWrite(vetorDisplay[k],matrizDados[j][k]);     
-      }
-      digitalWrite(clockUnidade,LOW);   
-      digitalWrite(clockUnidade,HIGH);
       delay(500);
 }
 
