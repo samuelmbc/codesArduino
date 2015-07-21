@@ -1,12 +1,14 @@
 // Programa : Niveis de ruido com Sensor de Som  
 // Autor : Arduino e Cia  
-
+#include <Servo.h> 
+Servo servoSino; 
    
 const int num_leitura = 256; //Define o numero de medicoes  
 int pinoSinalSensorSom = A0; //Pino ligado ao pino S do modulo sensor de som  
 long sinalSensorSom;   //Armazena o valor lido do Sensor de Som  
 long somaDeLeituras = 0; //Armazena o valor total das n medicoes  
 long nivelSom =0; //Armazena o valor medio  
+int direitoDeTossir=0; //criada para funcinar como um contador para casos de saude tosse e espiro. 
 
 const int vetorPinos[] = {8,7,6,5,4,3,2};
 int matrizEstado[8][7] = {{0,0,0,0,0,0,0}, //0
@@ -32,7 +34,8 @@ void setup()
   pinMode(5, OUTPUT);  
   pinMode(6, OUTPUT);  
   pinMode(7, OUTPUT);  
-  pinMode(8, OUTPUT);  
+  pinMode(8, OUTPUT); 
+  servoSino.attach(9);  //define a porta de ligação do Servo Motor
 
 }  
    
@@ -77,6 +80,14 @@ void loop()
     Serial.print("Nivel alto");  
     Serial.println(nivelSom);  
     estadoNivel(7);
+    direitoDeTossir++; //contador para casos de saúde
+    if(direitoDeTossir>2){
+      bateNoSino();
+      bateNoSino();
+      bateNoSino();
+      bateNoSino();
+      bateNoSino();
+    }
   }  
   
   somaDeLeituras = 0; //Reinicia a soma dos valores das medicoes  
@@ -87,5 +98,13 @@ void estadoNivel(int estadoSom){
   for(int k=0;k<=7;k++){
     digitalWrite(vetorPinos[k],matrizEstado[estadoSom][k]);    
  }
+}
+
+void bateNoSino(){
+  servoSino.write(180);                
+  delay(250);  
+  servoSino.write(90); 
+  delay(250);  
+  direitoDeTossir=0;
 }
 
