@@ -62,29 +62,26 @@ void loop()
       estadoNivel(3);
   }  
  
-  if (nivelSom >100 && nivelSom < 200 )  
+  if (nivelSom >100 && nivelSom < 300 )  
   {  
     Serial.print("Nivel Medio");  
     Serial.println(nivelSom);  
     estadoNivel(3);     
-    if (nivelSom > 120)  
-      estadoNivel(4);    
     if (nivelSom > 150)  
+      estadoNivel(4);    
+    if (nivelSom > 200)  
       estadoNivel(5);
-    if (nivelSom > 180)  
+    if (nivelSom > 250)  
       estadoNivel(6);
   }  
 
-  if (nivelSom > 200)  
+  if (nivelSom > 280)  
   {  
     Serial.print("Nivel alto");  
     Serial.println(nivelSom);  
     estadoNivel(7);
     direitoDeTossir++; //contador para casos de saúde
     if(direitoDeTossir>2){
-      bateNoSino();
-      bateNoSino();
-      bateNoSino();
       bateNoSino();
       bateNoSino();
     }
